@@ -1,0 +1,217 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <title>My Orders</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.png' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/gijgo.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/slicknav.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/responsive.css' %}">
+
+    <style>
+        body { background-color: #f4f7f6 !important; }
+        .orders-container { margin: 50px auto; max-width: 1000px; }
+        .order-card {
+            margin-bottom: 25px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e0e0e0;
+            transition: transform 0.3s;
+        }
+        .order-card:hover { transform: translateY(-3px); }
+        .card-body { padding: 25px; }
+
+        .data-item { margin: 10px 0; }
+
+        /* Standard Bold Labels for other fields */
+        .data-item strong {
+            display: block;
+            font-size: 12px;
+            font-weight: 800;
+            color: #2c3e50;
+            text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+
+        .data-item span { font-size: 15px; color: #34495e; font-weight: 500; }
+
+        /* UPDATED: Specific Styles for Service Section */
+        .service-label-large {
+            display: block;
+            font-size: 20px !important; /* BIG Label */
+            font-weight: 800;
+            color: #2c3e50;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .service-name-small {
+            font-size: 14px; /* SMALL Content */
+            color: #555;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        /* Badges */
+        .status-badge { padding: 6px 12px; border-radius: 50px; font-size: 13px; color: #fff; display: inline-block; }
+        .status-accepted { background-color: #2ecc71; }
+        .status-pending { background-color: #f1c40f; color: #333; }
+        .status-completed { background-color: #3498db; }
+        .status-in_progress { background-color: #17a2b8; }
+        .status-cancelled { background-color: #e74c3c; }
+
+        /* Timeline Box */
+        .timeline-box {
+            background-color: #e3f2fd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 4px solid #17a2b8;
+        }
+        .timeline-date { font-weight: bold; font-size: 14px; }
+
+        .title-separator {
+            border-bottom: 2px solid #3498db;
+            margin-top: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    {% include 'customer_header.html' %}
+
+    <div class="slider-area">
+        <div class="single-slider slider-height2 d-flex align-items-center" data-background="{% static 'assets/img/hero/gallery.jpg' %}">
+            <div class="container">
+                <div class="row"><div class="col-xl-12"><div class="hero-cap"><h2>My Orders</h2></div></div></div>
+            </div>
+        </div>
+    </div>
+
+    {% if messages %}
+    <div class="container orders-container">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="container orders-container">
+        <div class="row">
+            {% if reg %}
+                {% for con in reg %}
+                <div class="col-lg-4 col-md-6 d-flex">
+                    <div class="card order-card flex-fill">
+                        <div class="card-body">
+
+                            <div class="data-item">
+                                <strong class="service-label-large">Service</strong>
+                                <p class="service-name-small">{{ con.service.title }}</p>
+                            </div>
+                            <div class="title-separator"></div>
+                            <div class="data-item">
+                                <strong>Booking Date</strong>
+                                <span>{{ con.booking_date|date:"M d, Y" }}</span>
+                            </div>
+
+                            <div class="data-item">
+                                <strong>Requested Start</strong>
+                                <span>{{ con.scheduled_date|date:"M d, Y" }}</span>
+                            </div>
+
+                            <div class="data-item">
+                                <strong>Total Price</strong>
+                                <span>₹{{ con.total_price }}</span>
+                            </div>
+
+                            <div class="data-item mb-3">
+                                <strong>Current Status</strong>
+                                {% if con.status == 'accepted' %}
+                                    <span class="status-badge status-accepted">Accepted</span>
+                                {% elif con.status == 'in_progress' %}
+                                    <span class="status-badge status-in_progress">In Progress</span>
+                                {% elif con.status == 'completed' %}
+                                    <span class="status-badge status-completed">Completed</span>
+                                {% elif con.status == 'cancelled' %}
+                                    <span class="status-badge status-cancelled">Rejected</span>
+                                {% else %}
+                                    <span class="status-badge status-pending">Pending</span>
+                                {% endif %}
+                            </div>
+
+                            {% if con.status == 'in_progress' %}
+                                <div class="timeline-box">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <small class="text-muted">Started On</small><br>
+                                            <span class="timeline-date text-info">{{ con.actual_start_date|date:"M d, Y" }}</span>
+                                        </div>
+                                        <div class="col-6 text-right">
+                                            <small class="text-muted">Expected End</small><br>
+                                            <span class="timeline-date text-danger">{{ con.expected_end_date|date:"M d, Y" }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2 text-center">
+                                        <small class="text-muted"><i>Your order is being worked on!</i></small>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            {% if con.status == 'completed' %}
+                                <div class="mt-4 text-center">
+                                    <a href="{% url 'add_review' con.id %}" class="btn btn-sm btn-success rounded-pill px-4">
+                                        <i class="fas fa-star"></i> Rate Service
+                                    </a>
+                                </div>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center">
+                    <div class="alert alert-info mt-5">You haven't placed any orders yet.</div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+
+    <script src="{% static './assets/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+       <script src="{% static './assets/js/vendor/jquery-1.12.4.min.js' %}"></script>
+        <script src="{% static './assets/js/popper.min.js' %}"></script>
+        <script src="{% static './assets/js/bootstrap.min.js' %}"></script>
+        <script src="{% static './assets/js/jquery.slicknav.min.js' %}"></script>
+        <script src="{% static './assets/js/owl.carousel.min.js' %}"></script>
+        <script src="{% static './assets/js/slick.min.js' %}"></script>
+        <script src="{% static './assets/js/gijgo.min.js' %}"></script>
+        <script src="{% static './assets/js/wow.min.js' %}"></script>
+        <script src="{% static './assets/js/animated.headline.js' %}"></script>
+        <script src="{% static './assets/js/jquery.scrollUp.min.js' %}"></script>
+        <script src="{% static './assets/js/jquery.nice-select.min.js' %}"></script>
+       <script src="{% static './assets/js/jquery.sticky.js' %}"></script>
+        <script src="{% static './assets/js/jquery.magnific-popup.js' %}"></script>
+        <script src="{% static './assets/js/contact.js' %}"></script>
+        <script src="{% static './assets/js/jquery.form.js' %}"></script>
+        <script src="{% static './assets/js/jquery.validate.min.js' %}"></script>
+        <script src="{% static './assets/js/mail-script.js' %}"></script>
+        <script src="{% static './assets/js/jquery.ajaxchimp.min.js' %}"></script>
+        <script src="{% static './assets/js/plugins.js' %}"></script>
+        <script src="{% static './assets/js/main.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Fashion HTML-5 Template </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.png' %}">
+
+   <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/css/gijgo.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/css/slicknav.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/css/animate.min.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/css/fontawesome-all.min.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/css/themify-icons.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/css/responsive.css' %}">
+   <style>
+       body {
+           background-color: #ffffff !important;
+       }
+       .card-container {
+           margin: 40px auto;
+           max-width: 1200px;
+       }
+       .notification-card {
+           margin-bottom: 20px;
+           border-radius: 12px;
+           box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+           height: 380px;
+           display: flex;
+           flex-direction: column;
+           padding: 10px;
+       }
+       .notification-icon {
+           font-size: 35px;
+           color: #007bff;
+       }
+       .card-body {
+           display: flex;
+           flex-direction: column;
+           padding: 15px;
+       }
+
+       /* LABEL: Big and Bold */
+       .data-label {
+           display: block;
+           font-size: 14px;   /* Big */
+           font-weight: 800;  /* Extra Bold */
+           color: #2c3e50;    /* Darker */
+           text-transform: uppercase;
+           margin-bottom: 2px;
+           white-space: nowrap;
+       }
+
+       /* SUBJECT ROW: Side by Side */
+       .subject-row {
+           display: flex;
+           align-items: center;
+           margin-bottom: 15px;
+           gap: 10px;
+           width: 100%;
+       }
+
+       /* SUBJECT CONTENT: Scrollable */
+       .subject-scroll {
+           font-size: 13px;
+           font-weight: 600;
+           color: #007bff;
+           overflow-x: auto;
+           white-space: nowrap;
+           flex: 1;
+           padding-bottom: 3px;
+           text-align: left;
+       }
+       .subject-scroll::-webkit-scrollbar { height: 4px; }
+       .subject-scroll::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+
+       /* BODY CONTENT */
+       .notification-body {
+           flex: 1;
+           overflow-y: auto;
+           max-height: 100px;
+           margin-bottom: 10px;
+           text-align: left;
+       }
+       .notification-body p {
+           font-size: 13px; /* Small content */
+           line-height: 1.4;
+           color: #555;
+       }
+
+       /* DATE CONTENT */
+       .date-content {
+           font-size: 12px;
+           color: #777;
+       }
+
+       /* DELETE BUTTON */
+      .delete-btn {
+        background-color: #dc3545 !important;
+        border-color: #dc3545 !important;
+        border-radius: 8px !important;
+        font-size: 0.9rem;
+        padding: 8px 10px;
+   }
+   </style>
+</head>
+
+<body>
+
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="{% static 'assets/img/logo/logo.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'customer_header.html' %}
+    <div class="slider-area ">
+        <div class="single-slider slider-height2 d-flex align-items-center" data-background="{% static 'assets/img/hero/gallery.jpg' %}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap">
+                            <h2>Notifications</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container card-container">
+    <div class="row">
+        {% if con %}
+            {% for contact in con %}
+                <div class="col-md-4 mb-4 d-flex">
+                    <div class="card notification-card flex-fill">
+                        <div class="card-body text-center d-flex flex-column">
+                            <div class="mb-3">
+                                <i class="fas fa-bell notification-icon"></i>
+                            </div>
+
+                            <div class="subject-row">
+                                <span class="data-label">Subject:</span>
+                                <div class="subject-scroll">
+                                    {{ contact.title }}
+                                </div>
+                            </div>
+
+                            <div class="notification-body mb-3">
+                                <span class="data-label">Message Details</span>
+                                <p class="card-text">{{ contact.description }}</p>
+                            </div>
+
+                            <div class="mt-auto mb-3 text-left" style="width: 100%;">
+                                <span class="data-label">Date Posted</span>
+                                <p class="mb-0 date-content">{{ contact.date_posted }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12 text-center">
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-circle"></i> No notifications found.
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% include 'footer.html' %}
+
+    <script src="{% static './assets/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+    <script src="{% static './assets/js/vendor/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static './assets/js/popper.min.js' %}"></script>
+    <script src="{% static './assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static './assets/js/jquery.slicknav.min.js' %}"></script>
+    <script src="{% static './assets/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static './assets/js/slick.min.js' %}"></script>
+    <script src="{% static './assets/js/gijgo.min.js' %}"></script>
+    <script src="{% static './assets/js/wow.min.js' %}"></script>
+    <script src="{% static './assets/js/animated.headline.js' %}"></script>
+    <script src="{% static './assets/js/jquery.scrollUp.min.js' %}"></script>
+    <script src="{% static './assets/js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static './assets/js/jquery.sticky.js' %}"></script>
+    <script src="{% static './assets/js/jquery.magnific-popup.js' %}"></script>
+    <script src="{% static './assets/js/contact.js' %}"></script>
+    <script src="{% static './assets/js/jquery.form.js' %}"></script>
+    <script src="{% static './assets/js/jquery.validate.min.js' %}"></script>
+    <script src="{% static './assets/js/mail-script.js' %}"></script>
+    <script src="{% static './assets/js/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{% static './assets/js/plugins.js' %}"></script>
+    <script src="{% static './assets/js/main.js' %}"></script>
+</body>
+</html>

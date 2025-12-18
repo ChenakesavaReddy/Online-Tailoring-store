@@ -1,0 +1,54 @@
+{% load static %}
+
+<header>
+    <!-- Header Start -->
+    <div class="header-area header-sticky">
+        <div class="header-wrapper d-flex flex-wrap align-items-center justify-content-between">
+
+            <!-- Logo -->
+            <div class="logo">
+                <h4>Menztailor Online tailor booking system</h4>
+            </div>
+
+            <!-- Main-menu -->
+            <div class="main-menu d-none d-lg-block">
+                <nav>
+                    <ul id="navigation">
+
+                        <li><a href="{% url 'designer_index' %}">Home</a></li>
+
+                        <li><a href="{% url 'designer_gallery_upload' %}">Gallery</a></li>
+
+                        <!-- SERVICES DROPDOWN -->
+                        <li>
+                            <a href="#">Services</a>
+                            <ul class="submenu">
+                                <li><a href="{% url 'designer_add_service' %}">Add Service</a></li>
+                                <li><a href="{% url 'designer_view_services' designer.id %}">View Services</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="{% url 'designer_order' designer.id %}">Orders</a></li>
+
+                        <li><a href="{% url 'designer_view_reviews' designer.id %}">Reviews</a></li>
+                        <li>
+                            <a href="#">Account</a>
+                            <ul class="submenu">
+                                <li><a href="{% url 'designer_profile' %}">My Profile</a></li>
+                                <li><a href="{% url 'designer_change_password' %}">Change Password</a></li>
+                                <li><a href="{% url 'index' %}">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="col-12">
+                <div class="mobile_menu d-block d-lg-none"></div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Header End -->
+</header>

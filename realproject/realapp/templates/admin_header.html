@@ -1,0 +1,64 @@
+{% load static %}
+
+<header>
+    <!-- Header Start -->
+    <div class="header-area header-sticky">
+        <div class="header-wrapper d-flex flex-wrap align-items-center justify-content-between">
+            <!-- Logo -->
+            <!-- Logo -->
+                <div class="logo">
+                    <h4>Online tailor/Designer booking system and menztailor</h4>
+                </div>
+            <!-- Main-menu -->
+            <div class="main-menu d-none d-lg-block">
+                <nav>
+                    <ul id="navigation" class="menu-left">
+                        <li><a href="{% url 'admin_index' %}">Home</a></li>
+                        <li><a href="#">View Users<i class="fas fa-caret-down"></i></a>
+                            <ul class="submenu">
+                                <li><a href="{% url 'admin_view_customer' %}">View Customer</a></li>
+                                <li><a href="{% url 'admin_view_designer' %}">View Designer</a></li>
+                            </ul>
+                        </li>
+                        <!-- Notification Dropdown -->
+                        <li>
+                            <a href="#">Notification <i class="fas fa-caret-down"></i></a>
+                            <ul class="submenu">
+                                <li><a href="{% url 'add_notification' %}">Add Notification</a></li>
+                                <li><a href="{% url 'view_notification' %}">View Notification</a></li>
+                                <li><a href="{% url 'view_contact' %}">View Contact</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Account Dropdown -->
+                        <li>
+                            <a href="#">Account <i class="fas fa-caret-down"></i></a>
+                            <ul class="submenu">
+                                <li><a href="{% url 'admin_change_password' %}">Change Password</a></li>
+                                <li><a href="{% url 'index' %}">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="col-12">
+                <div class="mobile_menu d-block d-lg-none"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+</header>
+
+<!-- Custom CSS -->
+<style>
+    /* Shift menu items towards the left */
+    .main-menu nav ul.menu-left {
+        margin-left: 40px;   /* adjust this value as needed */
+    }
+
+    .main-menu nav ul.menu-left li {
+        margin-right: 25px; /* spacing between menu items */
+    }
+</style>
