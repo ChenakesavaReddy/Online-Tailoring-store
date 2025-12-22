@@ -1,0 +1,139 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Add Notification</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.png' %}">
+
+   <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/css/gijgo.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/css/slicknav.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/css/animate.min.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/css/fontawesome-all.min.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/css/themify-icons.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/css/themify-icons.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/css/responsive.css' %}">
+</head>
+
+<body>
+
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="{% static 'assets/img/logo/logo.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'admin_header.html' %}
+    <div class="slider-area ">
+        <div class="single-slider slider-height2 d-flex align-items-center" data-background="{% static 'assets/img/hero/gallery.jpg' %}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap">
+                            <h2>Add Notification</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="contact-section">
+    <div class="container d-flex justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-header text-center bg-primary text-white">
+                    <h4><i class="fas fa-bell"></i> Add Notification</h4>
+                </div>
+                <div class="card-body">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if msg %}
+                        <div class="alert alert-info" role="alert">
+                            {{ msg }}
+                        </div>
+                    {% endif %}
+
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <div class="form-group mb-3">
+                            <strong>Title:</strong>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-heading"></i></span>
+                                <input type="text" id="title" name="title" class="form-control"
+                                       placeholder="Enter the Title" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <strong>Description:</strong>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-align-left"></i></span>
+                                <textarea id="description" name="description" class="form-control"
+                                          rows="6" placeholder="Enter the Description" required></textarea>
+                            </div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="genric-btn circle arrow small success">
+                                <i class="fas fa-plus-circle"></i> Add Notification
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% include 'footer.html' %}
+
+    <script src="{% static './assets/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+		<script src="{% static './assets/js/vendor/jquery-1.12.4.min.js' %}"></script>
+        <script src="{% static './assets/js/popper.min.js' %}"></script>
+        <script src="{% static './assets/js/bootstrap.min.js' %}"></script>
+	    <script src="{% static './assets/js/jquery.slicknav.min.js' %}"></script>
+
+		<script src="{% static './assets/js/owl.carousel.min.js' %}"></script>
+        <script src="{% static './assets/js/slick.min.js' %}"></script>
+        <script src="{% static './assets/js/gijgo.min.js' %}"></script>
+		<script src="{% static './assets/js/wow.min.js' %}"></script>
+		<script src="{% static './assets/js/animated.headline.js' %}"></script>
+
+		<script src="{% static './assets/js/jquery.scrollUp.min.js' %}"></script>
+        <script src="{% static './assets/js/jquery.nice-select.min.js' %}"></script>
+		<script src="{% static './assets/js/jquery.sticky.js' %}"></script>
+        <script src="{% static './assets/js/jquery.magnific-popup.js' %}"></script>
+
+        <script src="{% static './assets/js/contact.js' %}"></script>
+        <script src="{% static './assets/js/jquery.form.js' %}"></script>
+        <script src="{% static './assets/js/jquery.validate.min.js' %}"></script>
+        <script src="{% static './assets/js/mail-script.js' %}"></script>
+        <script src="{% static './assets/js/jquery.ajaxchimp.min.js' %}"></script>
+
+		<script src="{% static './assets/js/plugins.js' %}"></script>
+        <script src="{% static './assets/js/main.js' %}"></script>
+
+    </body>
+
+    </html>
