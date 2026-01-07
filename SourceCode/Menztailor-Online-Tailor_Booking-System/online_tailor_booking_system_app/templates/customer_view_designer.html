@@ -1,0 +1,329 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Designer Profiles</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.png' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/gijgo.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/slicknav.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/responsive.css' %}">
+
+    <style>
+        /* Global Background */
+        body {
+            background-color: #f4f7f6 !important;
+        }
+        .profile-container {
+            margin: 50px auto;
+            max-width: 1200px;
+        }
+
+        /* Card Styling */
+        .designer-card {
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            transition: transform 0.3s ease-in-out;
+            border: 1px solid #e0e0e0;
+        }
+        .designer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        .designer-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+        .card-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 25px;
+            text-align: left;
+        }
+        .card-body h4 {
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        /* Rating Style */
+        .rating-display {
+            font-size: 16px;
+            font-weight: 600;
+            color: #f39c12;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f0f0f0;
+            text-align: center;
+        }
+
+        /* Data Item Styling */
+        .data-item {
+            margin: 8px 0;
+        }
+
+        /* UPDATED: Bold Labels */
+        .data-item strong {
+            display: inline-block;
+            width: 110px;
+            font-size: 13px;
+            font-weight: 800; /* Extra Bold */
+            color: #2c3e50;   /* Darker color for better visibility */
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-right: 5px;
+        }
+
+        .data-item span {
+            font-size: 14px;
+            color: #34495e;
+            display: inline-block;
+        }
+
+        /* About Text Scroll Area */
+        .about-text {
+            margin-top: 15px;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 10px;
+            max-height: 85px;
+            overflow: auto;
+            font-size: 14px;
+            color: #555;
+            flex-grow: 1;
+        }
+
+        /* UPDATED: Bold Label for About Me */
+        .about-text strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c3e50;   /* Darker color */
+            font-weight: 800; /* Extra Bold */
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        /* Action Buttons */
+        .action-group {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #f0f0f0;
+            justify-content: space-around;
+        }
+        .btn-sm-action {
+            padding: 8px 12px;
+            font-size: 13px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        /* Search Form Customization */
+        .search-form-group {
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="{% static 'assets/img/logo/logo.png' %}" alt="Logo">
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'customer_header.html' %}
+
+    <div class="slider-area ">
+        <div class="single-slider slider-height2 d-flex align-items-center"
+             data-background="{% static 'assets/img/hero/gallery.jpg' %}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap">
+                            <h2>Designer Profiles</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if msg %}
+        <div class="container mt-4">
+            <div class="alert alert-info" role="alert">{{ msg }}</div>
+        </div>
+    {% endif %}
+    {% if messages %}
+        <div class="container mt-4">
+            {% for message in messages %}
+                <div class="alert alert-danger" role="alert">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="container profile-container">
+
+        <div class="row mb-5 search-form-group">
+            <div class="col-12">
+                <form action="{% url 'customer_view_designer' %}" method="GET" class="row g-3 align-items-center">
+
+                    <div class="col-lg-5 col-md-12">
+                        <input type="text"
+                               name="q"
+                               class="form-control form-control-lg"
+                               placeholder="Search by name or city..."
+                               value="{{ query|default:'' }}"
+                               aria-label="Search Designers">
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <select name="specialization_filter" class="form-select form-select-lg">
+                            <option value="">All Specializations</option>
+                            <option value="men" {% if specialization_filter == 'men' %}selected{% endif %}>Men</option>
+                            <option value="women" {% if specialization_filter == 'women' %}selected{% endif %}>Women</option>
+                            <option value="kids" {% if specialization_filter == 'kids' %}selected{% endif %}>Kids</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-2 col-md-6">
+                        <select name="gender_filter" class="form-select form-select-lg">
+                            <option value="">All Genders</option>
+                            <option value="Male" {% if gender_filter == 'Male' %}selected{% endif %}>Male</option>
+                            <option value="Female" {% if gender_filter == 'Female' %}selected{% endif %}>Female</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-2 col-md-12">
+                        <button class="btn btn-primary btn-lg w-100" type="submit">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            {% if query or specialization_filter or gender_filter %}
+            <div class="col-12 mt-3">
+                <a href="{% url 'customer_view_designer' %}" class="btn btn-secondary btn-sm">
+                    <i class="fas fa-times"></i> Clear Filters
+                </a>
+            </div>
+            {% endif %}
+
+        </div>
+        <div class="row">
+            {% if reg %}
+                {% for contact in reg %}
+                <div class="col-lg-4 col-md-6 mb-4 d-flex">
+                    <div class="card designer-card flex-fill">
+                        {% if contact.profile_image %}
+                            <img src="{{ contact.profile_image.url }}" alt="{{ contact.fullname }} Profile">
+                        {% else %}
+                            <img src="{% static 'assets/img/default-profile.png' %}" alt="Default Profile">
+                        {% endif %}
+
+                        <div class="card-body">
+                            <h4>{{ contact.fullname }}</h4>
+                            <div class="rating-display">
+                                ⭐ {{ contact.avg_rating|default:'N/A' }}/5
+                            </div>
+
+                            <div class="data-item">
+                                <strong>Email:</strong> <span>{{ contact.email }}</span>
+                            </div>
+                            <div class="data-item">
+                                <strong>Phone:</strong> <span>{{ contact.mobile_number }}</span>
+                            </div>
+                            <div class="data-item">
+                                <strong>Location:</strong> <span>{{ contact.city }}, {{ contact.location }}</span>
+                            </div>
+                            <div class="data-item">
+                                <strong>Gender:</strong> <span>{{ contact.gender }}</span>
+                            </div>
+                            <div class="data-item">
+                                <strong>Experience:</strong> <span>{{ contact.experience }} years</span>
+                            </div>
+                            <div class="data-item">
+                                <strong>Specializes In:</strong> <span>{{ contact.specialization }}</span>
+                            </div>
+
+                            <div class="about-text">
+                                <strong>About Me:</strong> {{ contact.aboutme }}
+                            </div>
+
+                            <div class="d-flex gap-2 justify-content-between action-group">
+                               <a href="{% url 'customer_view_designer_detail' contact.id %}" class="btn btn-primary btn-sm-action flex-grow-1">
+                                   <i class="fas fa-eye"></i> Profile
+                               </a>
+                                <a href="{% url 'customer_view_designer_services' contact.id %}" class="btn btn-success btn-sm-action flex-grow-1">
+                                    <i class="fas fa-cogs"></i> Services
+                                </a>
+                                <a href="{% url 'customer_view_reviews' contact.id %}" class="btn btn-info btn-sm-action flex-grow-1">
+                                    <i class="fas fa-star"></i> Reviews
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center">
+                    <div class="alert alert-warning mt-5">
+                        <i class="fas fa-exclamation-circle"></i> No designers found {% if query %} matching your criteria{% endif %}.
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    {% include 'footer.html' %}
+
+    <script src="{% static './assets/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+    <script src="{% static './assets/js/vendor/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static './assets/js/popper.min.js' %}"></script>
+    <script src="{% static './assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static './assets/js/jquery.slicknav.min.js' %}"></script>
+    <script src="{% static './assets/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static './assets/js/slick.min.js' %}"></script>
+    <script src="{% static './assets/js/gijgo.min.js' %}"></script>
+    <script src="{% static './assets/js/wow.min.js' %}"></script>
+    <script src="{% static './assets/js/animated.headline.js' %}"></script>
+    <script src="{% static './assets/js/jquery.scrollUp.min.js' %}"></script>
+    <script src="{% static './assets/js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static './assets/js/jquery.sticky.js' %}"></script>
+    <script src="{% static './assets/js/jquery.magnific-popup.js' %}"></script>
+    <script src="{% static './assets/js/contact.js' %}"></script>
+    <script src="{% static './assets/js/jquery.form.js' %}"></script>
+    <script src="{% static './assets/js/jquery.validate.min.js' %}"></script>
+    <script src="{% static './assets/js/mail-script.js' %}"></script>
+    <script src="{% static './assets/js/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{% static './assets/js/plugins.js' %}"></script>
+    <script src="{% static './assets/js/main.js' %}"></script>
+</body>
+</html>

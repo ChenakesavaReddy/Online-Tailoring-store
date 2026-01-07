@@ -1,0 +1,212 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>View Services</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.png' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/gijgo.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/slicknav.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/responsive.css' %}">
+
+    <style>
+        body {
+            background-color: #ffffff !important;
+        }
+        .profile-container {
+            margin: 40px auto;
+            max-width: 1200px;
+        }
+        .designer-card {
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .designer-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+        .card-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+        }
+        .card-body h4 {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .card-body p {
+            font-size: 14px;
+            margin: 4px 0;
+            color: #555;
+        }
+        .btn-view-more {
+            margin-top: auto;
+            border-radius: 25px;
+            font-weight: bold;
+            padding: 6px 16px;
+        }
+        .service-card {
+            border-radius: 12px;
+            margin-bottom: 20px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .service-container {
+            margin-top: 60px;  /* adjust this value as needed */
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+        }
+        .service-card .card-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .service-card .card-text {
+            font-size: 14px;
+            color: #555;
+        }
+        .service-card .price {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .service-card .btn {
+            border-radius: 25px;
+            padding: 8px 20px;
+            font-weight: bold;
+            margin: 0 5px; /* Spacing between buttons */
+        }
+        .btn-back .btn {
+            padding: 0.5rem 1.5rem;   /* medium size */
+            border-radius: 50px;      /* pill shape */
+            font-size: 1rem;          /* medium text */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="{% static 'assets/img/logo/logo.png' %}" alt="Logo">
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'designer_header.html' %}
+
+    <div class="slider-area ">
+        <div class="single-slider slider-height2 d-flex align-items-center"
+             data-background="{% static 'assets/img/hero/gallery.jpg' %}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap">
+                            <h2>{{ designer.fullname }} - Services</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if messages %}
+    <div class="container mt-4">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="container service-container">
+        <div class="row">
+            {% if services %}
+                {% for service in services %}
+                    <div class="col-lg-4 col-md-6 col-sm-12 d-flex">
+                        <div class="card service-card flex-fill shadow-sm">
+                            {% if service.image %}
+                                <img src="{{ service.image.url }}" class="card-img-top" alt="{{ service.title }}">
+                            {% else %}
+                                <img src="{% static 'assets/img/default-service.jpg' %}" class="card-img-top" alt="No image available">
+                            {% endif %}
+                            <div class="card-body text-center">
+                                <p class="card-text"><strong>Service:</strong> {{ service.title }}
+                                <p class="card-text"><strong>Category:</strong> {{ service.category }}</p>
+                                <p class="card-text"><strong>Duration:</strong> {{ service.timeperiod }} days</p>
+                                <p class="card-text"><strong>Price:</strong>₹{{ service.price }}</p>
+
+                                <div class="mt-3">
+                                    <a href="{% url 'designer_edit_service' service.id %}" class="btn btn-warning btn-sm">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <a href="{% url 'designer_delete_service' service.id %}"
+                                       class="btn btn-danger btn-sm"
+                                       onclick="return confirm('Are you sure you want to delete this service? This action cannot be undone.');">
+                                        <i class="fas fa-trash-alt"></i> Delete
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center">
+                    <div class="alert alert-warning mt-5">
+                        <i class="fas fa-exclamation-circle"></i> No services found for this designer.
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+
+    <script src="{% static './assets/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+    <script src="{% static './assets/js/vendor/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static './assets/js/popper.min.js' %}"></script>
+    <script src="{% static './assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static './assets/js/jquery.slicknav.min.js' %}"></script>
+    <script src="{% static './assets/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static './assets/js/slick.min.js' %}"></script>
+    <script src="{% static './assets/js/gijgo.min.js' %}"></script>
+    <script src="{% static './assets/js/wow.min.js' %}"></script>
+    <script src="{% static './assets/js/animated.headline.js' %}"></script>
+    <script src="{% static './assets/js/jquery.scrollUp.min.js' %}"></script>
+    <script src="{% static './assets/js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static './assets/js/jquery.sticky.js' %}"></script>
+    <script src="{% static './assets/js/jquery.magnific-popup.js' %}"></script>
+    <script src="{% static './assets/js/contact.js' %}"></script>
+    <script src="{% static './assets/js/jquery.form.js' %}"></script>
+    <script src="{% static './assets/js/jquery.validate.min.js' %}"></script>
+    <script src="{% static './assets/js/mail-script.js' %}"></script>
+    <script src="{% static './assets/js/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{% static './assets/js/plugins.js' %}"></script>
+    <script src="{% static './assets/js/main.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>My Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/responsive.css' %}">
+
+    <style>
+        /* General Styling */
+        body {
+            background-color: #f4f7f6 !important; /* Light gray background */
+        }
+        .profile-container {
+            margin: 50px auto;
+            max-width: 500px;
+        }
+        /* Card Styling */
+        .card {
+            border-radius: 18px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            overflow: hidden;
+            border: none;
+            transition: transform 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        /* Image Styling */
+        .card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        /* Card Body Content */
+        .card-body {
+            padding: 30px;
+            text-align: left;
+        }
+        .card-body h4 {
+            font-weight: 700;
+            margin-bottom: 25px;
+            text-align: center;
+            color: #2c3e50;
+        }
+        /* Data Item Styling (Label-Value pair) */
+        .data-item {
+            margin: 15px 0;
+            line-height: 1.5;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .data-item:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        /* UPDATED: Bold Labels */
+        .data-item strong {
+            display: block;
+            font-size: 12px;       /* Slightly larger */
+            font-weight: 800;      /* Extra Bold */
+            color: #2c3e50;        /* Darker color for visibility */
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 3px;
+        }
+
+        .data-item p {
+            font-size: 15px;
+            color: #34495e;
+            margin: 0;
+        }
+
+        /* About Me specific styling */
+        .about-me-item p {
+             white-space: pre-wrap;
+        }
+
+        /* Button Group */
+        .btn-group {
+            display: flex;
+            justify-content: center; /* Centered buttons */
+            gap: 15px; /* Space between buttons */
+            padding: 20px 30px;
+            background-color: #fcfcfc;
+            border-top: 1px solid #eee;
+        }
+
+        .btn {
+            border-radius: 50px;
+            font-weight: 600;
+            padding: 8px 18px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-size: 11px;
+            line-height: 1.5;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn i {
+            margin-right: 6px;
+        }
+        .btn-dark {
+            background-color: #3498db;
+            border-color: #3498db;
+            color: white;
+        }
+        .btn-danger {
+            background-color: #e74c3c;
+            border-color: #e74c3c;
+            color: white;
+        }
+        /* Message Styling */
+        .profile-messages {
+            margin-top: 20px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="{% static 'assets/img/logo/logo.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'designer_header.html' %}
+
+    <div class="slider-area ">
+        <div class="single-slider slider-height2 d-flex align-items-center"
+             style="background-image: url('{% static 'assets/img/hero/gallery.jpg' %}'); background-size: cover; background-position: center;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap">
+                            <h2>My Profile</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container profile-messages">
+        {% if msg %}
+            <div class="alert alert-info" role="alert">{{ msg }}</div>
+        {% endif %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-danger" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class="container profile-container">
+        {% if reg %}
+            {% for contact in reg %}
+            <div class="card">
+                {% if contact.profile_image %}
+                    <img src="{{ contact.profile_image.url }}" alt="{{ contact.fullname }}'s Profile Image">
+                {% else %}
+                    <img src="{% static 'assets/img/default-profile.png' %}" alt="Default Profile Image">
+                {% endif %}
+
+                <div class="card-body">
+                    <h4>{{ contact.fullname }}</h4>
+
+                    <div class="data-item">
+                        <strong>Email Address</strong>
+                        <p>{{ contact.email }}</p>
+                    </div>
+
+                    <div class="data-item">
+                        <strong>Mobile Number</strong>
+                        <p>{{ contact.mobile_number }}</p>
+                    </div>
+
+                    <div class="data-item">
+                        <strong>Location/Address</strong>
+                        <p>{{ contact.address }}, {{ contact.city }} - {{ contact.location }} - {{ contact.pincode }}</p>
+                    </div>
+
+                    <div class="data-item">
+                        <strong>Gender</strong>
+                        <p>{{ contact.gender }}</p>
+                    </div>
+
+                    <div class="data-item">
+                        <strong>Experience</strong>
+                        <p>{{ contact.experience }} years</p>
+                    </div>
+
+                    <div class="data-item">
+                        <strong>Specialization</strong>
+                        <p>{{ contact.specialization }}</p>
+                    </div>
+
+                    <div class="data-item about-me-item">
+                        <strong>About Me</strong>
+                        <p>{{ contact.aboutme }}</p>
+                    </div>
+
+                </div>
+
+                <div class="btn-group">
+                    <a href="{% url 'designer_update_profile' contact.id %}" class="btn btn-dark btn-sm">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+                    <a href="{% url 'delete_designer_profile' contact.id %}" class="btn btn-danger btn-sm">
+                        <i class="fas fa-trash"></i> Delete
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center text-muted mt-5">⚠️ No profile found.</p>
+        {% endif %}
+    </div>
+    {% include 'footer.html' %}
+
+    <script src="{% static './assets/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+    <script src="{% static './assets/js/vendor/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static './assets/js/popper.min.js' %}"></script>
+    <script src="{% static './assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static './assets/js/jquery.slicknav.min.js' %}"></script>
+    <script src="{% static './assets/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static './assets/js/slick.min.js' %}"></script>
+    <script src="{% static './assets/js/gijgo.min.js' %}"></script>
+    <script src="{% static './assets/js/wow.min.js' %}"></script>
+    <script src="{% static './assets/js/animated.headline.js' %}"></script>
+    <script src="{% static './assets/js/jquery.scrollUp.min.js' %}"></script>
+    <script src="{% static './assets/js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static './assets/js/jquery.sticky.js' %}"></script>
+    <script src="{% static './assets/js/jquery.magnific-popup.js' %}"></script>
+    <script src="{% static './assets/js/contact.js' %}"></script>
+    <script src="{% static './assets/js/jquery.form.js' %}"></script>
+    <script src="{% static './assets/js/jquery.validate.min.js' %}"></script>
+    <script src="{% static './assets/js/mail-script.js' %}"></script>
+    <script src="{% static './assets/js/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{% static './assets/js/plugins.js' %}"></script>
+    <script src="{% static './assets/js/main.js' %}"></script>
+
+</body>
+</html>

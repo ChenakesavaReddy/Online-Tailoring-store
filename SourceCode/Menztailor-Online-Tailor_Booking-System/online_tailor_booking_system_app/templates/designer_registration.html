@@ -1,0 +1,217 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Designer Registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.png' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/gijgo.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/slicknav.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/responsive.css' %}">
+</head>
+
+<body>
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="{% static 'assets/img/logo/logo.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'header.html' %}
+
+    <div class="slider-area ">
+        <div class="single-slider slider-height2 d-flex align-items-center" data-background="{% static 'assets/img/hero/gallery.jpg' %}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap">
+                            <h2>Designer Registration</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="contact-section">
+        <div class="container d-flex justify-content-center">
+            <div class="col-md-8 col-lg-7">
+                <div class="card shadow-lg border-0 rounded-3 mt-4">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h4><i class="fas fa-user-plus"></i> Create Your Account</h4>
+                    </div>
+
+                    <div class="card-body">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            <div class="form-group mb-3">
+                                <label style="font-weight: bold;">Full Name:</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    <input type="text" class="form-control" name="fullname" placeholder="Enter Full Name" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label style="font-weight: bold;">Email:</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                    <input type="email" class="form-control" name="email" placeholder="Email Address" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label style="font-weight: bold;">Mobile Number:</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                    <input type="text" class="form-control" name="mobile_number"
+                                           pattern="^[6-9]\d{9}$" title="Start with 6-9, 10 digits" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label style="font-weight: bold;">Password:</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                    <input type="password" class="form-control" name="password" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label style="font-weight: bold;">Address:</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                                    <textarea class="form-control" name="address" rows="2" required></textarea>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 form-group mb-3">
+                                    <label style="font-weight: bold;">City:</label>
+                                    <input type="text" class="form-control" name="city" required>
+                                </div>
+                                <div class="col-md-6 form-group mb-3">
+                                    <label style="font-weight: bold;">Location:</label>
+                                    <input type="text" class="form-control" name="location" required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 form-group mb-3">
+                                    <label style="font-weight: bold;">Pincode:</label>
+                                    <input type="text" class="form-control" name="pincode" pattern="^[1-9][0-9]{5}$" required>
+                                </div>
+                                <div class="col-md-6 form-group mb-3">
+                                    <label style="font-weight: bold;">Gender:</label>
+                                    <select name="gender" class="form-control" required>
+                                        <option value="">-- Select --</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label style="font-weight: bold;">Experience (Years):</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-briefcase"></i></span>
+                                    <input type="number" class="form-control" name="experience" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label style="font-weight: bold;">Specialization:</label>
+                                <div class="input-group" style="padding: 10px; border: 1px solid #ced4da; border-radius: 0.25rem;">
+                                    <span class="input-group-text" style="margin-right: 15px;"><i class="fas fa-tasks"></i></span>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" name="specialization" value="men" id="men">
+                                        <label class="form-check-label" for="men">Men</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" name="specialization" value="women" id="women">
+                                        <label class="form-check-label" for="women">Women</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" name="specialization" value="kids" id="kids">
+                                        <label class="form-check-label" for="kids">Kids</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label style="font-weight: bold;">Profile Image:</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-image"></i></span>
+                                    <input type="file" class="form-control" name="profile_image" accept="image/*">
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label style="font-weight: bold;">About Me:</label>
+                                <textarea class="form-control" name="aboutme" rows="3"></textarea>
+                            </div>
+
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="genric-btn circle arrow small success">
+                                    <i class="fas fa-user-plus"></i> Register Now
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="card-footer text-center">
+                        Already have an account? <a href="{% url 'designer_login' %}" style="color: #007bff;">Login here</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% include 'footer.html' %}
+
+    <script src="{% static './assets/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+    <script src="{% static './assets/js/vendor/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static './assets/js/popper.min.js' %}"></script>
+    <script src="{% static './assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static './assets/js/jquery.slicknav.min.js' %}"></script>
+    <script src="{% static './assets/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static './assets/js/slick.min.js' %}"></script>
+    <script src="{% static './assets/js/gijgo.min.js' %}"></script>
+    <script src="{% static './assets/js/wow.min.js' %}"></script>
+    <script src="{% static './assets/js/animated.headline.js' %}"></script>
+    <script src="{% static './assets/js/jquery.scrollUp.min.js' %}"></script>
+    <script src="{% static './assets/js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static './assets/js/jquery.sticky.js' %}"></script>
+    <script src="{% static './assets/js/jquery.magnific-popup.js' %}"></script>
+    <script src="{% static './assets/js/main.js' %}"></script>
+</body>
+</html>

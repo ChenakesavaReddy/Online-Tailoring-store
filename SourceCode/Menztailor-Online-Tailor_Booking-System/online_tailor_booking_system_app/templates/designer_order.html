@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <title>Designer Orders</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.png' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/gijgo.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/slicknav.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/responsive.css' %}">
+
+    <style>
+        body { background-color: #f4f7f6 !important; }
+        .orders-container { margin: 50px auto; max-width: 1200px; }
+
+        .order-card {
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: none;
+            height: 100%;
+            background: #fff;
+            position: relative;
+        }
+
+        .order-card .card-header {
+            background: #2c3e50;
+            color: white;
+            font-weight: 700;
+            padding: 15px;
+            text-align: center;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+
+        .card-body {
+            overflow: visible !important;
+            padding: 20px;
+        }
+
+        .data-item {
+            margin: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 5px;
+        }
+
+        /* UPDATED: Bold Labels */
+        .data-item strong {
+            display: block;
+            font-size: 12px;
+            font-weight: 800; /* Extra Bold */
+            color: #2c3e50;   /* Darker color */
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 3px;
+        }
+
+        .data-item span { color: #34495e; font-weight: 500; font-size: 15px; }
+
+        /* Status Colors for Select */
+        .status-pending { background-color: #fcefdc; color: #d35400; }
+        .status-accepted { background-color: #d4edda; color: #155724; }
+        .status-in_progress { background-color: #d1ecf1; color: #0c5460; }
+        .status-completed { background-color: #cce5ff; color: #004085; }
+
+        .form-select {
+            height: 40px;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+        }
+
+        .nice-select .list {
+            z-index: 1000 !important;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    {% include 'designer_header.html' %}
+
+    <div class="slider-area">
+        <div class="single-slider slider-height2 d-flex align-items-center"
+             data-background="{% static 'assets/img/hero/gallery.jpg' %}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap"><h2>Order Management</h2></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container orders-container">
+        <div class="row">
+            {% if orders %}
+                {% for order in orders %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card order-card h-100">
+                        <div class="card-header">Service : {{ order.service.title }}</div>
+                        <div class="card-body">
+
+                            <div class="data-item">
+                                <strong>Customer</strong>
+                                <span>{{ order.customer.name }}</span>
+                            </div>
+                            <div class="data-item">
+                                <strong>Date Required</strong>
+                                <span>{{ order.scheduled_date }}</span>
+                            </div>
+                            <div class="data-item">
+                                <strong>Price</strong>
+                                <span>₹{{ order.total_price }}</span>
+                            </div>
+                            <div class="data-item">
+                                <strong>Notes</strong>
+                                <span>{{ order.notes|default:"None" }}</span>
+                            </div>
+
+                            <div class="mt-3" style="position: relative;"> <label class="font-weight-bold">Status:</label>
+
+                                {% if order.status == 'cancelled' or order.status == 'declined' %}
+                                    <div class="alert alert-danger text-center p-2">
+                                        <i class="fas fa-times-circle"></i> Rejected
+                                    </div>
+                                {% elif order.status == 'completed' %}
+                                    <div class="alert alert-primary text-center p-2">
+                                        <i class="fas fa-check-circle"></i> Completed
+                                    </div>
+                                {% else %}
+                                    <form method="post" action="">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="booking_id" value="{{ order.id }}">
+
+                                        <select name="status" class="form-select status-{{ order.status }}" onchange="this.form.submit()">
+                                            {% for key, value in order.STATUS_CHOICES %}
+
+                                                {# Logic: If Accepted, only show Accepted or In Progress #}
+                                                {% if order.status == 'accepted' %}
+                                                    {% if key == 'accepted' or key == 'in_progress' %}
+                                                        <option value="{{ key }}" {% if order.status == key %}selected{% endif %}>{{ value }}</option>
+                                                    {% endif %}
+
+                                                {# Logic: If In Progress, only show In Progress or Completed #}
+                                                {% elif order.status == 'in_progress' %}
+                                                    {% if key == 'in_progress' or key == 'completed' %}
+                                                        <option value="{{ key }}" {% if order.status == key %}selected{% endif %}>{{ value }}</option>
+                                                    {% endif %}
+
+                                                {# Logic: If Pending, show Pending, Accepted, Cancelled #}
+                                                {% elif order.status == 'pending' %}
+                                                    {% if key == 'pending' or key == 'accepted' or key == 'cancelled' %}
+                                                        <option value="{{ key }}" {% if order.status == key %}selected{% endif %}>{{ value }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </form>
+                                {% endif %}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center">
+                    <div class="alert alert-warning">No orders found.</div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+     <script src="{% static './assets/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+       <script src="{% static './assets/js/vendor/jquery-1.12.4.min.js' %}"></script>
+        <script src="{% static './assets/js/popper.min.js' %}"></script>
+        <script src="{% static './assets/js/bootstrap.min.js' %}"></script>
+        <script src="{% static './assets/js/jquery.slicknav.min.js' %}"></script>
+        <script src="{% static './assets/js/owl.carousel.min.js' %}"></script>
+        <script src="{% static './assets/js/slick.min.js' %}"></script>
+        <script src="{% static './assets/js/gijgo.min.js' %}"></script>
+        <script src="{% static './assets/js/wow.min.js' %}"></script>
+        <script src="{% static './assets/js/animated.headline.js' %}"></script>
+        <script src="{% static './assets/js/jquery.scrollUp.min.js' %}"></script>
+        <script src="{% static './assets/js/jquery.nice-select.min.js' %}"></script>
+       <script src="{% static './assets/js/jquery.sticky.js' %}"></script>
+        <script src="{% static './assets/js/jquery.magnific-popup.js' %}"></script>
+        <script src="{% static './assets/js/contact.js' %}"></script>
+        <script src="{% static './assets/js/jquery.form.js' %}"></script>
+        <script src="{% static './assets/js/jquery.validate.min.js' %}"></script>
+        <script src="{% static './assets/js/mail-script.js' %}"></script>
+        <script src="{% static './assets/js/jquery.ajaxchimp.min.js' %}"></script>
+        <script src="{% static './assets/js/plugins.js' %}"></script>
+        <script src="{% static './assets/js/main.js' %}"></script>
+</body>
+</html>

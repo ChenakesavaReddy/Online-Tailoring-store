@@ -1,0 +1,214 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Edit Service</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/gijgo.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/slicknav.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/responsive.css' %}">
+
+    <style>
+        body { background-color: #f4f7f6 !important; }
+        .contact-section { padding: 50px 0; }
+
+        .card {
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: none;
+        }
+        .card-header {
+            background-color: #3498db !important;
+            border-top-left-radius: 12px !important;
+            border-top-right-radius: 12px !important;
+            padding: 20px;
+        }
+        .card-header h4 {
+            margin-bottom: 0;
+            font-weight: 700;
+        }
+        .card-body { padding: 30px; }
+
+        .form-group label {
+            font-weight: 700;
+            color: #2c3e50;
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .form-control, .form-select {
+            height: 48px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            padding: 10px 15px;
+        }
+
+        .btn-success {
+            background-color: #27ae60;
+            border-color: #27ae60;
+            font-weight: 700;
+            padding: 12px 0;
+            border-radius: 50px;
+            font-size: 1rem;
+        }
+
+        img.preview-img {
+            width: 150px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border: 2px solid #eee;
+        }
+
+        .text-danger {
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+{% include 'designer_header.html' %}
+
+<div class="slider-area">
+    <div class="single-slider slider-height2 d-flex align-items-center" data-background="{% static 'assets/img/hero/gallery.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="hero-cap">
+                        <h2>Edit Service</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="contact-section">
+    <div class="container d-flex justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0">
+                <div class="card-header text-white text-center">
+                    <h4>Edit Service Details</h4>
+                </div>
+
+                <div class="card-body">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="form-group mb-3">
+                            <label>Service Title</label>
+                            <input type="text" name="title" value="{{ form.title.value|default_if_none:'' }}" class="form-control" required>
+                            {% if form.title.errors %}
+                                <div class="text-danger">{{ form.title.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label>Category</label>
+                            <input type="text" name="category" value="{{ form.category.value|default_if_none:'' }}" class="form-control" required>
+                            {% if form.category.errors %}
+                                <div class="text-danger">{{ form.category.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label>Time Period (days)</label>
+                            <input type="number" name="timeperiod" value="{{ form.timeperiod.value|default_if_none:'' }}" class="form-control" required>
+                            {% if form.timeperiod.errors %}
+                                <div class="text-danger">{{ form.timeperiod.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label>Price (₹)</label>
+                            <input type="number" step="0.01" name="price" value="{{ form.price.value|default_if_none:'' }}" class="form-control" required>
+                            {% if form.price.errors %}
+                                <div class="text-danger">{{ form.price.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label>Update Image (Optional)</label>
+                            <input type="file" name="image" class="form-control" accept="image/*">
+                            {% if form.image.errors %}
+                                <div class="text-danger">{{ form.image.errors }}</div>
+                            {% endif %}
+
+                            {% if service.image %}
+                            <div class="mt-2">
+                                <label class="d-block text-muted" style="font-weight: 400; font-size: 0.9rem;">Current Image:</label>
+                                <img src="{{ service.image.url }}" class="preview-img" alt="Service Image">
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="genric-btn circle arrow small success w-10 mb-2">
+                                <i class="fas fa-save"></i> Save Changes
+                            </button>
+
+                            <a href="{% url 'designer_view_services' designer.id %}" class="genric-btn circle arrow small danger w-10 text-center">
+                                Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% include 'footer.html' %}
+
+    <script src="{% static './assets/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+
+    <script src="{% static './assets/js/vendor/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static './assets/js/popper.min.js' %}"></script>
+    <script src="{% static './assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static './assets/js/jquery.slicknav.min.js' %}"></script>
+
+    <script src="{% static './assets/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static './assets/js/slick.min.js' %}"></script>
+    <script src="{% static './assets/js/wow.min.js' %}"></script>
+    <script src="{% static './assets/js/animated.headline.js' %}"></script>
+    <script src="{% static './assets/js/jquery.magnific-popup.js' %}"></script>
+
+    <script src="{% static './assets/js/jquery.scrollUp.min.js' %}"></script>
+    <script src="{% static './assets/js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static './assets/js/jquery.sticky.js' %}"></script>
+
+    <script src="{% static './assets/js/contact.js' %}"></script>
+    <script src="{% static './assets/js/jquery.form.js' %}"></script>
+    <script src="{% static './assets/js/jquery.validate.min.js' %}"></script>
+    <script src="{% static './assets/js/mail-script.js' %}"></script>
+    <script src="{% static './assets/js/jquery.ajaxchimp.min.js' %}"></script>
+
+    <script src="{% static './assets/js/plugins.js' %}"></script>
+    <script src="{% static './assets/js/main.js' %}"></script>
+
+</body>
+</html>
