@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Complete Payment</title>
+</head>
+<body style="text-align: center; margin-top: 50px;">
+    <h2>Complete Your Payment for {{ service.title }}</h2>
+    <p>Amount: ₹{{ service.price }}</p>
+
+    <button id="pay-btn" style="padding: 10px 20px; background-color: #6366f1; color: white; border: none; border-radius: 5px; cursor: pointer;">Pay Now</button>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        var options = {
+            "key": "{{ key_id }}",
+            "amount": "{{ amount }}",
+            "currency": "{{ currency }}",
+            "order_id": "{{ order_id }}",
+            "name": "Tailor Booking System",
+            "description": "Payment for {{ service.title }}",
+            "handler": function (response){
+                // Create a form to submit response securely to your backend handler
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = "{% url 'payment_success' %}";
+
+                for (var key in response) {
+                    if (response.hasOwnProperty(key)) {
+                        var input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = key;
+                        input.value = response[key];
+                        form.appendChild(input);
+                    }
+                }
+                document.body.appendChild(form);
+                form.submit();
+            },
+            "prefill": {
+                "name": "{{ customer.name }}",
+                "email": "{{ customer.email }}",
+                "contact": "{{ customer.mobile_number }}"
+            },
+            "theme": {
+                "color": "#6366f1"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        document.getElementById('pay-btn').onclick = function(e){
+            rzp1.open();
+            e.preventDefault();
+        }
+        // Automatically open checkout on page load (optional)
+        window.onload = function(){
+            rzp1.open();
+        }
+    </script>
+</body>
+</html>
